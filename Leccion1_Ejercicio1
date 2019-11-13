@@ -1,0 +1,11 @@
+
+Float cantidad, valor
+String nombre
+
+nombre = read("Digite el nombre de la criptomoneda")
+cantidad = Float(read("Digite que cantidad de monedas tiene"))
+valor = Float(read("Digite cuanto vale la una criptomoneda en USD"))
+
+res = cantidad * valor
+
+print("Ud. posee un total de US$",res,"correspondientes a",cantidad,"de",nombre)
