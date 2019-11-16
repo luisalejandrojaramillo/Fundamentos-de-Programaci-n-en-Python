@@ -1,0 +1,7 @@
+funcion ConversionCriptomoneda(cantBTC,cantXRP: float): float
+	var saldoTotalUSD, BTCUSD,XRPUSD: float;
+	BTCUSD=7442.50;
+	XRPUSD=0.660982;
+	saldoTotalUSD = (cantBTC*BTCUSD) + (cantXRP*XRPUSD);
+	retorna saldoTotalUSD;
+finFuncion
