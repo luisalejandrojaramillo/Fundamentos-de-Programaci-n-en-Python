@@ -6,6 +6,7 @@ def mayor(moneda1,moneda2,moneda3,cant1,cant2,cant3):
         else:
             print(moneda3,cant3)
             print(moneda2,cant2)
+            
 def main():
     moneda1=input("Ingrese el nombre de la primera moneda: ")
     cant1=float(input("Ingresa la cantidad de "+moneda1+":"))
