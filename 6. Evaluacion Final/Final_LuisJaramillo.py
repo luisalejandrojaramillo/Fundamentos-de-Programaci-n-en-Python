@@ -1,6 +1,7 @@
 import random
+import requests
 from datetime import datetime
-
+#Para ejecutar se utiliza> python Final.py  (desde la consola)
 def mosMon(mon,dMio,dPrecio):#para imprimir lo que se debe mostrar de las monedas
     print(mon.upper())
     print("Es este momento usted posee:",dMio[mon],mon.upper())
@@ -22,19 +23,24 @@ def printMat(lis):
 
 def creaDictP():
     d = {}
-    d['btc']=7210.98#Bitcoin
-    d['eth']=129.47#Ethereum
-    d['xrp']=0.189885#XRP
-    d['usdt']=1.01#Tether
-    d['bch']=187.50#Bitcoin Cash
-    d['ltc']=40.06#Litecoin
-    d['eos']=2.47#EOS
-    d['bnb']=13.37#Binance Coin
-    d['bsv']=85.36#Bitcoin SV
-    d['xtz']=1.54#Tezos
-    d['xlm']=0.045117#Stellar
+    btcdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT")).json()
+    d['btc']=float(btcdata["price"])#Bitcoin
+    ethdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT")).json()
+    d['eth']=float(ethdata["price"])#Ethereum
+    xrpdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT")).json()
+    d['xrp']=float(xrpdata["price"])#XRP
+    bchdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT")).json()
+    d['bch']=float(bchdata["price"])#Bitcoin Cash
+    ltcdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=LTCUSDT")).json()
+    d['ltc']=float(ltcdata["price"])#Litecoin
+    eosdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=EOSUSDT")).json()
+    d['eos']=float(eosdata["price"])#EOS
+    bnbdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT")).json()
+    d['bnb']=float(bnbdata["price"])#Binance Coin
+    xtzdata = requests.get(("https://api.binance.com/api/v3/ticker/price?symbol=XTZUSDT")).json()
+    d['xtz']=float(xtzdata["price"])#Tezos
     return d
-
+    
 def main():
     cond = "1"
     #Variables que se utilizan en toda la ejecicion
@@ -57,7 +63,7 @@ def main():
         print("Notas:")
         print("- El Dinero esta en USD")
         print("- Solo se aceptan las sigientes monedas (se pone la abreviatura, es decir lo que esta entre parentesis)")
-        print("Bitcoin(BTC), Ethereum(ETH), XRP(XRP), Tether(ETH), Bitcoin Cash(BCH), Litecoin(LTC), EOS(EOS), Binance Coin(BNB), Bitcoin SV(BSV), Stellar(XLM) & Tezos(XTZ)")
+        print("Bitcoin(BTC), Ethereum(ETH), XRP(XRP), Bitcoin Cash(BCH), Litecoin(LTC), EOS(EOS), Binance Coin(BNB)& Tezos(XTZ)")
         print("-----------------------------------------------------")
         cond = input("").strip()#Siguiente Menu
         #Aca van a estar las variables que vamos a utilizar en el programa 
@@ -92,6 +98,9 @@ def main():
                 if (varC and not(1000<=int(cDes)<=5000)):
                     varC = False
                     print("ERROR: El codigo debe estar entre 1000 y 5000")
+                if (varC and (int(cDes)==miCode)):
+                    varC = False
+                    print("ERROR: El codigo de Origen y Destino no puede ser el mismo.")
             crip = input("Que Criptomoneda va a enviar ?").lower().strip()
             if crip in dMio:
                 cant = int(input("Que cantidad va a enviar?"))
@@ -106,7 +115,7 @@ def main():
                 print("ERROR: Usted no posee",crip+'.')    
         elif cond == '3':
             print("3")
-            mon = input("Que moneda va a Buscar ?").strip()
+            mon = input("Que moneda va a Buscar ?").lower().strip()
             if mon in dMio:
                 mosMon(mon,dMio,dPrecio)
             else:
